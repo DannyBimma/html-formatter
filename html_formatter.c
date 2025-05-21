@@ -45,6 +45,12 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+void display_usage(char *program_name)
+{
+    fprintf(stderr, "Usage: %s <input_file>\n", program_name);
+    fprintf(stderr, "The program will create a new .html file with the same name.\n");
+}
+
 // Process input file and write to output file
 void parse_file(FILE *input, FILE *output)
 {
