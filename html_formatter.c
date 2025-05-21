@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Function prototypes
+void display_usage(char *program_name);
+void write_header(FILE *output);
+void write_footer(FILE *output);
+void parse_file(FILE *input, FILE *output);
+int formatter_check(FILE *input, FILE *output, char first_char);
+
 int main(int argc, char *argv[])
 {
     FILE *input_file;
