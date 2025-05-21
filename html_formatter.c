@@ -35,3 +35,31 @@ int main(int argc, char *argv[])
         return 3;
     }
 }
+
+// Process input file and write to output file
+void parse_file(FILE *input, FILE *output)
+{
+    int c;
+    int body_flag = 0; // Flag to check if loop is within body tag
+
+    write_header(output); // TODO: Define
+
+    while ((c = fgetc(input)) != EOF)
+    {
+        /* Check if current character is start of formatter string */
+        if (c == 'h' || c == 'p' || c == 's' || c == 'e')
+        {
+            /* Check for formatter string */
+            if (check_formatter(input, output, (char)c) == 0)
+            {
+                /* If not, write current character */
+                fputc(c, output);
+            }
+        }
+        else
+        {
+            /* Write current character to output file */
+            fputc(c, output);
+        }
+    }
+}
