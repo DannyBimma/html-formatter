@@ -40,6 +40,8 @@ int main(int argc, char *argv[])
     fclose(input_file);
     fclose(output_file);
 
+    printf("HTML successfully formatted! \nOutput has been written to %s.\n", output_filename);
+
     return 0;
 }
 
