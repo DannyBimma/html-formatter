@@ -51,6 +51,18 @@ void display_usage(char *program_name)
     fprintf(stderr, "The program will create a new .html file with the same name.\n");
 }
 
+void write_header(FILE *output)
+{
+    fputs("<!DOCTYPE html>\n", output);
+    fputs("<html lang=\"en\">\n", output);
+    fputs("<head>\n", output);
+    fputs("    <meta charset=\"UTF-8\">\n", output);
+    fputs("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n", output);
+    fputs("    <title>Blog Content</title>\n", output);
+    fputs("</head>\n", output);
+    fputs("<body>\n", output);
+}
+
 // Process input file and write to output file
 void parse_file(FILE *input, FILE *output)
 {
