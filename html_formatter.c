@@ -62,4 +62,6 @@ void parse_file(FILE *input, FILE *output)
             fputc(c, output);
         }
     }
+
+    write_footer(output); // TODO: Define
 }
