@@ -34,6 +34,13 @@ int main(int argc, char *argv[])
         fclose(input_file);
         return 3;
     }
+
+    parse_file(input_file, output_file);
+
+    fclose(input_file);
+    fclose(output_file);
+
+    return 0;
 }
 
 // Process input file and write to output file
