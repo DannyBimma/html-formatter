@@ -63,6 +63,12 @@ void write_header(FILE *output)
     fputs("<body>\n", output);
 }
 
+void write_footer(FILE *output)
+{
+    fputs("</body>\n", output);
+    fputs("</html>\n", output);
+}
+
 // Process input file and write to output file
 void parse_file(FILE *input, FILE *output)
 {
