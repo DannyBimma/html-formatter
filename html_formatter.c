@@ -75,7 +75,7 @@ void parse_file(FILE *input, FILE *output)
     int c;
     int body_flag = 0; // Flag to check if loop is within body tag
 
-    write_header(output); // TODO: Define
+    write_header(output);
 
     while ((c = fgetc(input)) != EOF)
     {
@@ -83,7 +83,7 @@ void parse_file(FILE *input, FILE *output)
         if (c == 'h' || c == 'p' || c == 's' || c == 'e')
         {
             /* Check for formatter string */
-            if (check_formatter(input, output, (char)c) == 0)
+            if (formatter_check(input, output, (char)c) == 0)
             {
                 /* If not, write current character */
                 fputc(c, output);
@@ -96,5 +96,143 @@ void parse_file(FILE *input, FILE *output)
         }
     }
 
-    write_footer(output); // TODO: Define
+    write_footer(output);
+}
+
+int formatter_check(FILE *input, FILE *output, char first_char)
+{
+    long file_pos;
+    char buffer[5]; // 4 charater formatter + null terminator
+    int i, c;
+
+    // Save current file position
+    file_pos = ftell(input);
+
+    buffer[0] = first_char;
+
+    // Check for body formatter sequence
+    if (first_char == 's' || first_char == 'e')
+    {
+        for (i = 1; i <= 3; i++)
+        {
+            c = fgetc(input);
+            if (c == EOF)
+            {
+                // Can't read any more chars, not a body formatter
+                fseek(input, file_pos, SEEK_SET);
+                return 0;
+            }
+            buffer[i] = (char)c;
+        }
+        buffer[4] = '\0'; // Terminate string
+
+        // Already done by write_header() and write_footer()
+        if (strcmp(buffer, "s..s") == 0)
+        {
+            return 1;
+        }
+        else if (strcmp(buffer, "e..e") == 0)
+        {
+            return 1;
+        }
+    }
+    // Check for heading formatter sequence
+    else if (first_char == 'h')
+    {
+        for (i = 1; i <= 3; i++)
+        {
+            c = fgetc(input);
+            if (c == EOF)
+            {
+                // Can't read any more chars, not heading formatter
+                fseek(input, file_pos, SEEK_SET);
+                return 0;
+            }
+            buffer[i] = (char)c;
+        }
+        buffer[4] = '\0';
+
+        if (strcmp(buffer, "h1-o") == 0)
+        {
+            fputs("<h1>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h1-c") == 0)
+        {
+            fputs("</h1>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h2-o") == 0)
+        {
+            fputs("<h2>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h2-c") == 0)
+        {
+            fputs("</h2>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h3-o") == 0)
+        {
+            fputs("<h3>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h3-c") == 0)
+        {
+            fputs("</h3>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h4-o") == 0)
+        {
+            fputs("<h4>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h4-c") == 0)
+        {
+            fputs("</h4>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h5-o") == 0)
+        {
+            fputs("<h5>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "h5-c") == 0)
+        {
+            fputs("</h5>", output);
+            return 1;
+        }
+    }
+    // Paragraph formatter
+    else if (first_char == 'p')
+    {
+        for (i = 1; i <= 2; i++)
+        {
+            c = fgetc(input);
+            if (c == EOF)
+            {
+                // Can't read any more chars, not a paragraph formatter
+                fseek(input, file_pos, SEEK_SET);
+                return 0;
+            }
+            buffer[i] = (char)c;
+        }
+        buffer[3] = '\0'; // Terminate string
+
+        if (strcmp(buffer, "p-o") == 0)
+        {
+            fputs("<p>", output);
+            return 1;
+        }
+        else if (strcmp(buffer, "p-c") == 0)
+        {
+            fputs("</p>", output);
+            return 1;
+        }
+    }
+
+    fseek(input, file_pos, SEEK_SET);
+    printf("No formatters found for %s\n", buffer);
+
+    return 0;
 }
