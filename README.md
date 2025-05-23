@@ -4,11 +4,11 @@
 
 This "HTML Formatter" is a program I built in C that converts plain text files, with my own made-up format specifiers, into a HTML file that can be uploaded straight to the web.
 
-A few months ago I started a lil developer blog with GitHub Pages with plain ole HTML, CSS, and JS. I'd like to blog more often, but the process of replacing the content of the HTML page every time is very annoying... the web is annoying, in general. It'll be much easier for me to write my heart's content into a plain text file, throw in my custom format specifiers, and have simply have the program shit out a functional HTML page to publish.
+A few months ago I started a lil developer blog on GitHub Pages with plain ole HTML, CSS, and JS. I'd like to blog more often, but the process of replacing the content of the HTML page every time is very annoying... the web is annoying, in general. It'll be much easier for me to write my heart's content into a plain text file, throw in my custom format specifiers, and simply have the program shit out a functional HTML page to publish.
 
-This certainly wouldn't be particularly useful for real bloggers and content creators, or anyone else for that matter. I didn't even check to see if a real solution existed before i started building this, so please don't use it. To be honest I just wanted an excuse to write a couple hundred lines of C, and now I'm a happy coder boi 🙂
+This certainly wouldn't be particularly useful for real bloggers and content creators, or anyone else for that matter. I didn't even check to see if a real solution existed before I started building this, so please don't use it, use a real CDN. To be honest, I just wanted an excuse to write a couple hundred lines of C, and now I'm a happy coder boi 🙂
 
-So to surmise: The program reads a text.txt file, identifies special formatter specifiers/strings, and replaces each of them with the corresponding HTML tags while wrapping the entire content in HTML5 boilerplate code.
+So to surmise: The program reads a text.txt file, identifies special format specifiers/strings, and replaces each of them with the corresponding HTML tags while wrapping the entire content in HTML5 boilerplate code.
 
 ## Features
 
